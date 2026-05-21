@@ -33,3 +33,60 @@
     }
   ]
 }
+
+
+{
+  "collections": [
+    {
+      "id": "gospel-as-poetry",
+      "title": "The Gospel As Poetry",
+
+      "volumes": [
+        {
+          "id": "passion-week",
+          "title": "Volume 3 - Passion Week",
+          "folder": "passionweek",
+          "description": "Poems following the movement from Gethsemane to crucifixion.",
+          "baseUrl": "https://mmister411.github.io/biblereader/poetry/passionweek/",
+          "poems": [
+    {
+      "title": "Gethsemane - Garden of Prayer",
+      "file": "Gethsemane - Garden of Prayer.md"
+    },
+    {
+      "title": "Gethsemane - Garden of Betrayal",
+      "file": "Gethsemane - Garden of Betrayal.md"
+    },
+    {
+      "title": "Jesus On Trial - The Sanhedrin and Peter",
+      "file": "Jesus On Trial - The Sanhedrin and Peter.md"
+    },
+    {
+      "title": "Jesus On Trial - Pilate & Judas",
+      "file": "Jesus On Trial - PIlate & Judas.md"
+    },
+    {
+      "title": "Jesus On Trial: Herod, Barabas and The Scourging",
+      "file": "Jesus On Trial - Herod, Barabas and The Scourging.md"
+    }
+      ]
+    },
+    {
+      "id": "paulineepistles",
+      "title": "The Pauline Epistles As Poetry",
+      "volumes": [
+        {
+          "id": "romans",
+          "title": "Romans",
+          "folder": "paulineepistles",
+          "poems": [
+                    {
+                      "title": "Chapter 1 - Unashamed of The Gospel",
+                      "file": "Romans 1 - Unashamed of The Gospel.md"
+                    }
+                      ]
+       }
+      ]
+    }
+  ]
+}
