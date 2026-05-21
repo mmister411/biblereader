@@ -1,21 +1,21 @@
 # Chapter 1: Unashamed of the Gospel
 
-From Paul: an Apostle; as one that is sent; 
-Separate for the gospel of GOD.  (He's legit) 
-This same sort of gospel (in prophesy past )
+FFrom a servant of Jesus, Apostle of Christ
+named Paul, set apart with the gospel in sight.
+This same sort of gospel in prophesy past
 was foretold as is written, now here at long last. 
- 
-The prophets foretold us of David's offspring, 
+The prophets foretold about David's offspring, 
 That would be Son of GOD which is Jesus our King. 
+
 So how do we know it is Jesus that's Christ? 
 Through the Spirit of holiness flowing His might 
 resurrecting our LORD and declaring Him right. 
- 
-From this Christ our apostleship stems and is based.
+ From this Christ our apostleship stems and is based.
 By His grace we go out to each nation and place.
+
 In each nation we labor to cultivate faith
-In His name that's obedient, solid, not fake.
-Through this grace you were called, and with others the same
+In His name that's obedient, powered by grace.
+By which grace you were called, and with others the same
 For the sake of His wonderful glorious name.
 
 Now with that out the way I would now like to say,
@@ -75,7 +75,7 @@ Self proclaimed to be wise but turned foolish in heart
 And more dark than the blackest of parts of deep space. 
  
 The glory of GOD they just swapped and exchanged 
-For the glory of man which is dark and derranged. 
+For the glory of man which is dark and deranged. 
 They exchanged the immortal for things that can break. 
 For birds and for snakes and for things GOD creates. 
  
@@ -94,19 +94,18 @@ And the men follow suit and leave women behind
 as they lust for each other and think that it's fine.
 They'll receive the results of their error in time. 
  
-Since they thought it as needless to keep what they knew 
-of GOD, He released them to go on  and stew 
-They're released to a broken mind, lost in their haze, 
-Sort-a-free to enjoy inappropriate ways. 
+Since they deemed it as needless to hold what they knew
+of GOD, He released them to follow it through.
+They’re released to a mind that is broken and dazed.
+They're turned loose to indulge in disordered ways.
  
-Being full of unrighteousness, fornication, 
-all twisted, and greedy, always debating, 
-malicious and hateful, and ready to lie, 
-They talk behind backs, reject GOD, even boast, 
-And disobey parents as to the utmost. 
- 
-They invent evil, they're without understanding, 
-Disloyal, and loveless, no mercy in planning. 
-Who know of the justice of GOD on these things, 
-which are worthy of death but they cease not to cling
-to their lusts and enjoy all who do the same things. 
+Being filled with unrighteousness, malice and greed,
+fornication and wickedness, envy, deceit.
+They slander in secret and boast in their pride.
+They're defiant of parents, respect left aside.
+
+They invent what is evil, lack wisdom and care,
+unfaithful, unloving, no mercy to spare.
+They know God’s decree on the deeds they defend,
+that death is the wage at the road’s bitter end,
+yet and still they persist while their fellows commend.
