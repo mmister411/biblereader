@@ -1,46 +1,8 @@
 {
-  "volume": {
-    "title": "Passion Week",
-    "description": "Poems following the movement from Gethsemane to crucifixion.",
-    "baseUrl": "https://mmister411.github.io/biblereader/poetry/passionweek/",
-    "badges": [
-      "Volume I",
-      "Poetry",
-      "Holy Week"
-    ]
-  },
-
-  "poems": [
-    {
-      "title": "Gethsemane - Garden of Prayer",
-      "file": "Gethsemane - Garden of Prayer.md"
-    },
-    {
-      "title": "Gethsemane - Garden of Betrayal",
-      "file": "Gethsemane - Garden of Betrayal.md"
-    },
-    {
-      "title": "Jesus On Trial - The Sanhedrin and Peter",
-      "file": "Jesus On Trial - The Sanhedrin and Peter.md"
-    },
-    {
-      "title": "Jesus On Trial - Pilate & Judas",
-      "file": "Jesus On Trial - PIlate & Judas.md"
-    },
-    {
-      "title": "Jesus On Trial: Herod, Barabas and The Scourging",
-      "file": "Jesus On Trial - Herod, Barabas and The Scourging.md"
-    }
-  ]
-}
-
-
-{
   "collections": [
     {
       "id": "gospel-as-poetry",
       "title": "The Gospel As Poetry",
-
       "volumes": [
         {
           "id": "passion-week",
@@ -48,44 +10,54 @@
           "folder": "passionweek",
           "description": "Poems following the movement from Gethsemane to crucifixion.",
           "baseUrl": "https://mmister411.github.io/biblereader/poetry/passionweek/",
+          "badges": [
+            "Volume I",
+            "Poetry",
+            "Holy Week"
+          ],
           "poems": [
-    {
-      "title": "Gethsemane - Garden of Prayer",
-      "file": "Gethsemane - Garden of Prayer.md"
-    },
-    {
-      "title": "Gethsemane - Garden of Betrayal",
-      "file": "Gethsemane - Garden of Betrayal.md"
-    },
-    {
-      "title": "Jesus On Trial - The Sanhedrin and Peter",
-      "file": "Jesus On Trial - The Sanhedrin and Peter.md"
-    },
-    {
-      "title": "Jesus On Trial - Pilate & Judas",
-      "file": "Jesus On Trial - PIlate & Judas.md"
-    },
-    {
-      "title": "Jesus On Trial: Herod, Barabas and The Scourging",
-      "file": "Jesus On Trial - Herod, Barabas and The Scourging.md"
-    }
+            {
+              "title": "Gethsemane - Garden of Prayer",
+              "file": "Gethsemane - Garden of Prayer.md"
+            },
+            {
+              "title": "Gethsemane - Garden of Betrayal",
+              "file": "Gethsemane - Garden of Betrayal.md"
+            },
+            {
+              "title": "Jesus On Trial - The Sanhedrin and Peter",
+              "file": "Jesus On Trial - The Sanhedrin and Peter.md"
+            },
+            {
+              "title": "Jesus On Trial - Pilate & Judas",
+              "file": "Jesus On Trial - PIlate & Judas.md"
+            },
+            {
+              "title": "Jesus On Trial: Herod, Barabas and The Scourging",
+              "file": "Jesus On Trial - Herod, Barabas and The Scourging.md"
+            }
+          ]
+        }
       ]
     },
     {
-      "id": "paulineepistles",
+      "id": "pauline-epistles",
       "title": "The Pauline Epistles As Poetry",
+      "folder": "paulineepistles",
+      "description": "Poetic ports or renders of Paul's Epistles.",
+      "baseUrl": "https://github.com/mmister411/biblereader/tree/main/poetry/paulineepistles",
       "volumes": [
         {
           "id": "romans",
           "title": "Romans",
           "folder": "paulineepistles",
           "poems": [
-                    {
-                      "title": "Chapter 1 - Unashamed of The Gospel",
-                      "file": "Romans 1 - Unashamed of The Gospel.md"
-                    }
-                      ]
-       }
+            {
+              "title": "Chapter 1 - Unashamed of The Gospel",
+              "file": "Romans 1 - Unashamed of The Gospel.md"
+            }
+          ]
+        }
       ]
     }
   ]
