@@ -1,19 +1,31 @@
-[
-  {
-    "title": "Gethsemane - Garden of Prayer",
-    "file": "Gethsemane - Garden of Prayer.md"
+{
+  "volume": {
+    "title": "Passion Week",
+    "description": "Poems following the movement from Gethsemane to crucifixion.",
+    "baseUrl": "https://mmister411.github.io/biblereader/poetry/passionweek/",
+    "badges": [
+      "Volume I",
+      "Poetry",
+      "Holy Week"
+    ]
   },
-  {
-    "title": "Gethsemane - Garden of Betrayal",
-    "file": "Gethsemane - Garden of Betrayal.md"
-  },
-  {
-    "title": "Jesus On Trial - The Sanhedrin and Peter",
-    "file": "Jesus On Trial - The Sanhedrin and Peter.md"
-  },
-  {
-    "title": "Jesus On Trial - PIlate & Judas",
-    "file": "Jesus On Trial - PIlate & Judas.md"
-  }
-]
 
+  "poems": [
+    {
+      "title": "Gethsemane - Garden of Prayer",
+      "file": "Gethsemane - Garden of Prayer.md"
+    },
+    {
+      "title": "Gethsemane - Garden of Betrayal",
+      "file": "Gethsemane - Garden of Betrayal.md"
+    },
+    {
+      "title": "Jesus On Trial - The Sanhedrin and Peter",
+      "file": "Jesus On Trial - The Sanhedrin and Peter.md"
+    },
+    {
+      "title": "Jesus On Trial - Pilate & Judas",
+      "file": "Jesus On Trial - PIlate & Judas.md"
+    }
+  ]
+}
