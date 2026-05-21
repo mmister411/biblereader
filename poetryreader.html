@@ -1,0 +1,1257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Poetry Reader | Believer Tools</title>
+  <meta
+    name="description"
+    content="A static poetry reader for Believer Tools."
+  />
+
+  <!-- Portable BT3 Header Shell -->
+  <link
+    rel="stylesheet"
+    href="https://couppaqsopgvtakzcvgu.supabase.co/storage/v1/object/public/css/app.css"
+  />
+
+  <style>
+    :root {
+      --reader-measure: 760px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: 12px;
+      z-index: 100;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: var(--bt3-white);
+      transform: translateY(-160%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-hero {
+      width: min(var(--content-width, 1100px), calc(100% - 32px));
+      margin: 24px auto 18px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--panel);
+      background: linear-gradient(135deg, var(--panel), var(--panel-strong));
+      box-shadow: var(--shadow);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-hero::before {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto auto;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      background: radial-gradient(circle, var(--accent-soft), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-lockup .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      padding: 7px;
+      background: var(--primary-soft);
+      box-shadow: var(--shadow-soft);
+      object-fit: contain;
+    }
+
+    .brand-kicker {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .site-hero h1 {
+      margin: 2px 0 0;
+      font-size: clamp(2rem, 5vw, 4.25rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme {
+      width: 52px;
+      min-width: 52px;
+      padding: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 0;
+      background: var(--panel-strong);
+      background: color-mix(in srgb, var(--panel-strong) 82%, transparent);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      box-shadow: none;
+      backdrop-filter: blur(12px);
+    }
+
+    .theme:hover:not(:disabled) {
+      background: var(--accent-soft);
+      color: var(--accent-hover);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .hero-badge {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--primary-soft);
+      color: var(--muted-strong);
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .reader-shell {
+      width: min(var(--content-width, 1100px), calc(100% - 32px));
+      margin: 0 auto 48px;
+      display: grid;
+      grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .library-panel,
+    .poem-panel {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .library-panel {
+      position: sticky;
+      top: 16px;
+      padding: 14px;
+    }
+
+    .nav-section {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-section:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .panel-title {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .collection-list,
+    .volume-list,
+    .poem-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .collection-link,
+    .volume-link,
+    .poem-link {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--panel-strong);
+      color: var(--text);
+      text-align: left;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .collection-link:hover,
+    .collection-link[aria-current="true"],
+    .volume-link:hover,
+    .volume-link[aria-current="true"],
+    .poem-link:hover,
+    .poem-link[aria-current="true"] {
+      border-color: var(--border-strong);
+      background: var(--primary-soft);
+      color: var(--accent-hover);
+    }
+
+    .poem-panel {
+      min-height: 56vh;
+      padding: clamp(18px, 4vw, 34px);
+    }
+
+    .poem-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .toolbar-actions button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--panel-strong);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .toolbar-actions button:hover {
+      background: var(--accent-soft);
+      color: var(--accent-hover);
+    }
+
+    .poem-content {
+      max-width: var(--reader-measure);
+      margin: 0 auto;
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+      line-height: 1.78;
+    }
+
+    .poem-content h1,
+    .poem-content h2,
+    .poem-content h3 {
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .poem-content h1 {
+      margin-top: 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+    }
+
+    .poem-content p {
+      margin: 0 0 1.1em;
+    }
+
+    .poem-content hr {
+      margin: 2rem 0;
+      border: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .poem-content blockquote {
+      margin: 1.5rem 0;
+      padding: 0.2rem 0 0.2rem 1rem;
+      border-left: 4px solid var(--primary);
+      color: var(--muted-strong);
+    }
+
+    .error-box {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--primary-soft);
+      color: var(--muted-strong);
+      font-weight: 700;
+    }
+
+    .error-box code {
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 820px) {
+      .reader-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .library-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .site-hero {
+        margin-top: 14px;
+        padding: 18px;
+      }
+
+      .hero-top {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-actions {
+        width: 100%;
+      }
+
+      .theme {
+        width: 100%;
+      }
+
+      .brand-lockup .logo {
+        width: 48px;
+        height: 48px;
+      }
+
+      .hero-badges {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-hero reader-hero" data-bt3-header>
+    <div class="hero-top">
+      <div class="brand-lockup">
+        <img
+          id="bt3-logo"
+          class="logo"
+          src="https://couppaqsopgvtakzcvgu.supabase.co/storage/v1/object/public/images/heart_only-2_512_fullcolor.png"
+          alt="Believer Tools logo"
+        />
+        <div>
+          <p class="brand-kicker">Believer Tools</p>
+          <h1 id="volume-title">Poetry Reader</h1>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <button
+          id="bt3-theme"
+          class="theme"
+          type="button"
+          aria-label="Toggle theme"
+        >◐</button>
+      </div>
+    </div>
+
+    <p class="hero-copy">
+      A focused reader for collected poems, arranged for quiet reading and quick return.
+    </p>
+
+    <div id="hero-badges" class="hero-badges" aria-label="Volume tags"></div>
+  </header>
+
+  <main id="main" class="reader-shell">
+    <aside class="library-panel" aria-label="Poetry library">
+      <div id="collection-section" class="nav-section">
+        <p class="panel-title">Collections</p>
+        <div id="collection-list" class="collection-list"></div>
+      </div>
+
+      <div id="volume-section" class="nav-section">
+        <p class="panel-title">Volumes</p>
+        <div id="volume-list" class="volume-list"></div>
+      </div>
+
+      <div class="nav-section">
+        <p class="panel-title">Poems</p>
+        <div id="poem-list" class="poem-list"></div>
+      </div>
+    </aside>
+
+    <article class="poem-panel" aria-live="polite">
+      <div class="poem-toolbar">
+        <div id="reader-status" class="status">Reader ready</div>
+        <div class="toolbar-actions">
+          <button id="copy-link" type="button">Copy link</button>
+        </div>
+      </div>
+      <div id="poem-content" class="poem-content">
+        <h1>Choose a poem</h1>
+        <p>Select a poem from the list.</p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const BT3_HEADER_CONFIG = {
+      themeKey: "bt3-theme",
+      lightLogo:
+        "https://couppaqsopgvtakzcvgu.supabase.co/storage/v1/object/public/images/heart_only-2_512_fullcolor.png",
+      darkLogo:
+        "https://couppaqsopgvtakzcvgu.supabase.co/storage/v1/object/public/images/heartlogo_only_darkmode_512.png"
+    };
+
+    const MANIFEST_URL = "https://mmister411.github.io/biblereader/poetry/index.json";
+    const POETRY_BASE_URL = "https://mmister411.github.io/biblereader/poetry/";
+    const CANONICAL_READER_URL = "https://mmister411.github.io/biblereader/passionweek-poetry-reader.html";
+
+    const DEFAULT_COLLECTION = {
+      id: "gospel-as-poetry",
+      title: "The Gospel As Poetry",
+      description: "A poetry library arranged by collection and volume.",
+      badges: ["Poetry", "Scripture"]
+    };
+
+    const DEFAULT_VOLUME = {
+      id: "passion-week",
+      title: "Passion Week",
+      description: "Poems following the movement from Gethsemane to crucifixion.",
+      folder: "passionweek",
+      baseUrl: "https://mmister411.github.io/biblereader/poetry/passionweek/",
+      badges: ["Volume III", "Poetry", "Holy Week"],
+      poems: []
+    };
+
+    let COLLECTIONS = [];
+    let COLLECTION = { ...DEFAULT_COLLECTION, volumes: [] };
+    let VOLUMES = [];
+    let VOLUME = { ...DEFAULT_VOLUME };
+    let POEMS = [];
+    let activePoem = null;
+
+    const volumeTitle = document.getElementById("volume-title");
+    const heroBadges = document.getElementById("hero-badges");
+    const heroCopy = document.querySelector(".hero-copy");
+    const collectionSection = document.getElementById("collection-section");
+    const collectionList = document.getElementById("collection-list");
+    const volumeSection = document.getElementById("volume-section");
+    const volumeList = document.getElementById("volume-list");
+    const poemList = document.getElementById("poem-list");
+    const poemContent = document.getElementById("poem-content");
+    const readerStatus = document.getElementById("reader-status");
+    const copyLink = document.getElementById("copy-link");
+
+    function setBt3Theme(theme) {
+      const dark = theme === "dark";
+      document.body.classList.toggle("dark", dark);
+
+      const themeButton = document.getElementById("bt3-theme");
+      const logo = document.getElementById("bt3-logo");
+
+      if (themeButton) {
+        themeButton.textContent = dark ? "◑" : "◐";
+        themeButton.setAttribute(
+          "aria-label",
+          dark ? "Switch to light theme" : "Switch to dark theme"
+        );
+      }
+
+      if (logo) {
+        logo.src = dark
+          ? BT3_HEADER_CONFIG.darkLogo
+          : BT3_HEADER_CONFIG.lightLogo;
+      }
+
+      localStorage.setItem(BT3_HEADER_CONFIG.themeKey, dark ? "dark" : "light");
+    }
+
+    function initBt3Header() {
+      const savedTheme = localStorage.getItem(BT3_HEADER_CONFIG.themeKey);
+      const prefersDark =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      setBt3Theme(savedTheme || (prefersDark ? "dark" : "light"));
+
+      const themeButton = document.getElementById("bt3-theme");
+      if (themeButton) {
+        themeButton.addEventListener("click", function () {
+          setBt3Theme(document.body.classList.contains("dark") ? "light" : "dark");
+        });
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function inlineMarkdown(value) {
+      return escapeHtml(value)
+        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+        .replace(/`([^`]+)`/g, "<code>$1</code>");
+    }
+
+    function markdownToHtml(markdown) {
+      const lines = String(markdown).replace(/\r\n/g, "\n").split("\n");
+      const html = [];
+      let paragraph = [];
+      let inBlockquote = false;
+
+      function flushParagraph() {
+        if (!paragraph.length) return;
+        const rendered = inlineMarkdown(paragraph.join("\n")).replace(/\n/g, "<br>");
+        html.push(`<p>${rendered}</p>`);
+        paragraph = [];
+      }
+
+      function closeBlockquote() {
+        if (!inBlockquote) return;
+        html.push("</blockquote>");
+        inBlockquote = false;
+      }
+
+      for (const rawLine of lines) {
+        const line = rawLine.trimEnd();
+
+        if (!line.trim()) {
+          flushParagraph();
+          closeBlockquote();
+          continue;
+        }
+
+        if (/^---+$/.test(line.trim())) {
+          flushParagraph();
+          closeBlockquote();
+          html.push("<hr>");
+          continue;
+        }
+
+        const heading = line.match(/^(#{1,3})\s+(.+)$/);
+        if (heading) {
+          flushParagraph();
+          closeBlockquote();
+          const level = heading[1].length;
+          html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+          continue;
+        }
+
+        const quote = line.match(/^>\s?(.+)$/);
+        if (quote) {
+          flushParagraph();
+          if (!inBlockquote) {
+            html.push("<blockquote>");
+            inBlockquote = true;
+          }
+          html.push(`<p>${inlineMarkdown(quote[1])}</p>`);
+          continue;
+        }
+
+        closeBlockquote();
+        paragraph.push(line);
+      }
+
+      flushParagraph();
+      closeBlockquote();
+      return html.join("\n");
+    }
+
+    function ensureTrailingSlash(value) {
+      return String(value || "").endsWith("/") ? String(value) : `${value}/`;
+    }
+
+    function slugify(value) {
+      return String(value || "item")
+        .trim()
+        .toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "") || "item";
+    }
+
+    function encodePathSegment(value) {
+      return encodeURIComponent(value).replace(/%2F/g, "/");
+    }
+
+    function githubTreeToPagesUrl(value) {
+      return String(value || "").replace(
+        "https://github.com/mmister411/biblereader/tree/main/poetry/",
+        POETRY_BASE_URL
+      );
+    }
+
+    function volumeBaseUrl(volume) {
+      if (volume.baseUrl) return ensureTrailingSlash(githubTreeToPagesUrl(volume.baseUrl));
+      if (volume.collectionBaseUrl) return ensureTrailingSlash(githubTreeToPagesUrl(volume.collectionBaseUrl));
+      if (volume.folder) return `${POETRY_BASE_URL}${encodePathSegment(volume.folder).replace(/\/$/, "")}/`;
+      return DEFAULT_VOLUME.baseUrl;
+    }
+
+    function normalizePoem(poem, volume = VOLUME) {
+      const base = volumeBaseUrl(volume);
+
+      return {
+        title: poem.title || poem.file || "Untitled poem",
+        file: poem.file || "",
+        url: poem.url || `${base}${encodePathSegment(poem.file || "")}`
+      };
+    }
+
+    function normalizeVolume(volume, index = 0, collection = DEFAULT_COLLECTION) {
+      const title = volume.title || DEFAULT_VOLUME.title;
+      const id = volume.id || slugify(title || `volume-${index + 1}`);
+      const explicitBaseUrl = volume.baseUrl || "";
+      const collectionBaseUrl = collection.baseUrl || "";
+      const folder = volume.folder || volume.slug || id;
+
+      const normalized = {
+        ...volume,
+        id,
+        collectionId: collection.id,
+        collectionBaseUrl,
+        title,
+        folder,
+        description:
+          volume.description || collection.description || DEFAULT_VOLUME.description,
+        badges: Array.isArray(volume.badges)
+          ? volume.badges
+          : [collection.title, title],
+        poems: Array.isArray(volume.poems) ? volume.poems : []
+      };
+
+      if (explicitBaseUrl) {
+        normalized.baseUrl = explicitBaseUrl;
+      } else if (collectionBaseUrl) {
+        normalized.collectionBaseUrl = collectionBaseUrl;
+        delete normalized.baseUrl;
+      } else {
+        normalized.baseUrl = `${POETRY_BASE_URL}${encodePathSegment(folder).replace(/\/$/, "")}/`;
+      }
+
+      normalized.baseUrl = volumeBaseUrl(normalized);
+      return normalized;
+    }
+
+    function normalizeCollection(collection, index = 0) {
+      const title = collection.title || DEFAULT_COLLECTION.title;
+      const id = collection.id || slugify(title || `collection-${index + 1}`);
+      const normalized = {
+        ...DEFAULT_COLLECTION,
+        ...collection,
+        id,
+        title,
+        volumes: []
+      };
+
+      const directVolumes = Array.isArray(collection.volumes)
+        ? collection.volumes.filter((item) => !Array.isArray(item.volumes))
+        : [];
+
+      normalized.volumes = directVolumes.map((volume, volumeIndex) =>
+        normalizeVolume(volume, volumeIndex, normalized)
+      );
+
+      return normalized;
+    }
+
+    function extractNestedCollections(collections) {
+      const extracted = [];
+
+      collections.forEach((collection, collectionIndex) => {
+        extracted.push(normalizeCollection(collection, collectionIndex));
+
+        if (!Array.isArray(collection.volumes)) return;
+
+        collection.volumes.forEach((item, itemIndex) => {
+          if (!Array.isArray(item.volumes)) return;
+
+          extracted.push(
+            normalizeCollection(
+              {
+                ...item,
+                id: item.id || slugify(item.title || `collection-${collectionIndex + 1}-${itemIndex + 1}`),
+                title: item.title || "Untitled Collection"
+              },
+              extracted.length
+            )
+          );
+        });
+      });
+
+      return extracted.filter((collection) => collection.volumes.length > 0);
+    }
+
+    function normalizeManifest(manifest) {
+      if (Array.isArray(manifest)) {
+        return [
+          normalizeCollection({
+            ...DEFAULT_COLLECTION,
+            volumes: [
+              {
+                ...DEFAULT_VOLUME,
+                poems: manifest
+              }
+            ]
+          })
+        ];
+      }
+
+      if (manifest && Array.isArray(manifest.collections)) {
+        return extractNestedCollections(manifest.collections);
+      }
+
+      if (manifest && Array.isArray(manifest.volumes)) {
+        return extractNestedCollections([
+          {
+            ...DEFAULT_COLLECTION,
+            volumes: manifest.volumes
+          }
+        ]);
+      }
+
+      if (manifest && manifest.volume && Array.isArray(manifest.poems)) {
+        return [
+          normalizeCollection({
+            ...DEFAULT_COLLECTION,
+            volumes: [
+              {
+                ...manifest.volume,
+                poems: manifest.poems
+              }
+            ]
+          })
+        ];
+      }
+
+      if (manifest && Array.isArray(manifest.poems)) {
+        return [
+          normalizeCollection({
+            ...DEFAULT_COLLECTION,
+            volumes: [manifest]
+          })
+        ];
+      }
+
+      return [];
+    }
+
+    function renderVolumeMeta() {
+      volumeTitle.textContent = VOLUME.title || DEFAULT_VOLUME.title;
+      heroCopy.textContent = VOLUME.description || COLLECTION.description || DEFAULT_COLLECTION.description;
+      document.title = `${VOLUME.title || DEFAULT_VOLUME.title} | ${COLLECTION.title || DEFAULT_COLLECTION.title}`;
+      heroBadges.innerHTML = "";
+
+      const badges = Array.isArray(VOLUME.badges) ? VOLUME.badges : DEFAULT_VOLUME.badges;
+
+      badges.forEach((badge) => {
+        const span = document.createElement("span");
+        span.className = "hero-badge";
+        span.textContent = badge;
+        heroBadges.appendChild(span);
+      });
+    }
+
+    function getRequestedCollectionId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("collection") || DEFAULT_COLLECTION.id;
+    }
+
+    function getRequestedVolumeId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("volume") || DEFAULT_VOLUME.id;
+    }
+
+    function decodeRepeatedly(value) {
+      let decoded = String(value || "");
+
+      for (let i = 0; i < 3; i += 1) {
+        try {
+          const next = decodeURIComponent(decoded);
+          if (next === decoded) break;
+          decoded = next;
+        } catch (error) {
+          break;
+        }
+      }
+
+      return decoded;
+    }
+
+    function getInitialPoem() {
+      const params = new URLSearchParams(window.location.search);
+      const requested = decodeRepeatedly(params.get("poem"));
+
+      if (!requested) return POEMS[0] || null;
+
+      return (
+        POEMS.find((poem) => poem.file === requested) ||
+        POEMS.find((poem) => poem.url === requested) ||
+        POEMS[0] ||
+        null
+      );
+    }
+
+    function readerBaseUrl() {
+      if (window.location.hostname === "mmister411.github.io") {
+        return `${window.location.origin}${window.location.pathname}`;
+      }
+
+      return CANONICAL_READER_URL;
+    }
+
+    function selectCollectionAndVolume(collectionId, volumeId) {
+      COLLECTION =
+        COLLECTIONS.find((collection) => collection.id === collectionId) ||
+        COLLECTIONS[0];
+
+      VOLUMES = COLLECTION.volumes || [];
+      VOLUME =
+        VOLUMES.find((volume) => volume.id === volumeId) ||
+        VOLUMES[0] ||
+        { ...DEFAULT_VOLUME, poems: [] };
+
+      POEMS = VOLUME.poems.map((poem) => normalizePoem(poem, VOLUME));
+    }
+
+    function poemUrl(poem) {
+      return poem.url;
+    }
+
+    function updateActiveButtons(poem = activePoem) {
+      document.querySelectorAll(".collection-link").forEach((button) => {
+        button.setAttribute(
+          "aria-current",
+          button.dataset.collectionId === COLLECTION.id ? "true" : "false"
+        );
+      });
+
+      document.querySelectorAll(".volume-link").forEach((button) => {
+        button.setAttribute(
+          "aria-current",
+          button.dataset.volumeId === VOLUME.id ? "true" : "false"
+        );
+      });
+
+      document.querySelectorAll(".poem-link").forEach((button) => {
+        button.setAttribute(
+          "aria-current",
+          poem && button.dataset.url === poem.url ? "true" : "false"
+        );
+      });
+    }
+
+    async function loadPoem(poem, pushState = true) {
+      if (!poem) {
+        activePoem = null;
+        updateActiveButtons(null);
+        readerStatus.textContent = "No poem selected";
+        poemContent.innerHTML = "<p>No poem is available for this volume.</p>";
+        return;
+      }
+
+      activePoem = poem;
+      readerStatus.textContent = `Loading ${poem.title}`;
+      poemContent.innerHTML = "<p>Loading poem…</p>";
+      updateActiveButtons(poem);
+
+      try {
+        const response = await fetch(poemUrl(poem), { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Poem request failed: ${response.status} ${poemUrl(poem)}`);
+        }
+
+        const markdown = await response.text();
+        poemContent.innerHTML = markdownToHtml(markdown);
+        readerStatus.textContent = poem.title;
+        document.title = `${poem.title} | ${VOLUME.title}`;
+
+        if (pushState) {
+          const url = new URL(window.location.href);
+          url.searchParams.set("collection", COLLECTION.id || DEFAULT_COLLECTION.id);
+          url.searchParams.set("volume", VOLUME.id || DEFAULT_VOLUME.id);
+          url.searchParams.set("poem", poem.file || poem.title);
+          window.history.pushState(
+            { collection: COLLECTION.id, volume: VOLUME.id, poem: poem.url },
+            "",
+            url
+          );
+        }
+      } catch (error) {
+        poemContent.innerHTML = `
+          <div class="error-box">
+            Could not load this poem.<br>
+            <code>${escapeHtml(error.message)}</code>
+          </div>
+        `;
+        readerStatus.textContent = "Load failed";
+      }
+    }
+
+    async function loadManifest() {
+      const response = await fetch(MANIFEST_URL, { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error(`Manifest request failed: ${response.status} ${MANIFEST_URL}`);
+      }
+
+      const manifest = await response.json();
+      COLLECTIONS = normalizeManifest(manifest);
+
+      if (!COLLECTIONS.length) {
+        throw new Error("Manifest does not contain any readable collections, volumes, or poems.");
+      }
+
+      selectCollectionAndVolume(getRequestedCollectionId(), getRequestedVolumeId());
+    }
+
+    function renderCollectionList() {
+      collectionList.innerHTML = "";
+      collectionSection.hidden = COLLECTIONS.length < 2;
+
+      COLLECTIONS.forEach((collection) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "collection-link";
+        button.dataset.collectionId = collection.id;
+        button.textContent = collection.title;
+        button.addEventListener("click", async () => {
+          selectCollectionAndVolume(collection.id, "");
+          renderVolumeMeta();
+          renderCollectionList();
+          renderVolumeList();
+          renderPoemList();
+          await loadPoem(POEMS[0], true);
+        });
+        collectionList.appendChild(button);
+      });
+    }
+
+    function renderVolumeList() {
+      volumeList.innerHTML = "";
+      volumeSection.hidden = VOLUMES.length === 0;
+
+      VOLUMES.forEach((volume) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "volume-link";
+        button.dataset.volumeId = volume.id;
+        button.textContent = volume.title;
+        button.addEventListener("click", async () => {
+          selectCollectionAndVolume(COLLECTION.id, volume.id);
+          renderVolumeMeta();
+          renderCollectionList();
+          renderVolumeList();
+          renderPoemList();
+          await loadPoem(POEMS[0], true);
+        });
+        volumeList.appendChild(button);
+      });
+    }
+
+    function renderPoemList() {
+      poemList.innerHTML = "";
+
+      POEMS.forEach((poem) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "poem-link";
+        button.dataset.url = poem.url;
+        button.textContent = poem.title;
+        button.addEventListener("click", () => loadPoem(poem));
+        poemList.appendChild(button);
+      });
+
+      updateActiveButtons();
+    }
+
+    function buildShareUrl(poem) {
+      const url = new URL(readerBaseUrl());
+
+      url.search = "";
+      url.searchParams.set("collection", COLLECTION.id || DEFAULT_COLLECTION.id);
+      url.searchParams.set("volume", VOLUME.id || DEFAULT_VOLUME.id);
+
+      if (poem) {
+        url.searchParams.set("poem", poem.file || poem.title);
+      }
+
+      return url.toString();
+    }
+
+    async function copyTextToClipboard(text) {
+      if (
+        navigator.clipboard &&
+        typeof navigator.clipboard.writeText === "function" &&
+        window.isSecureContext
+      ) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          // Fall through to the textarea method for sandboxed or restricted contexts.
+        }
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      textarea.style.top = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch (error) {
+        copied = false;
+      }
+
+      document.body.removeChild(textarea);
+      return copied;
+    }
+
+    function setCopyButtonState(label) {
+      copyLink.textContent = label;
+      window.setTimeout(() => {
+        copyLink.textContent = "Copy link";
+      }, 1400);
+    }
+
+    function runReaderTests() {
+      console.assert(
+        markdownToHtml("# Title").includes("<h1>Title</h1>"),
+        "markdownToHtml renders h1 headings"
+      );
+
+      console.assert(
+        markdownToHtml("Line one\nLine two").includes("Line one<br>Line two"),
+        "markdownToHtml renders single line breaks inside stanzas"
+      );
+
+      console.assert(
+        markdownToHtml("**bold** and *em*").includes("<strong>bold</strong> and <em>em</em>"),
+        "markdownToHtml renders basic inline markdown"
+      );
+
+      console.assert(
+        !markdownToHtml("Line one\nLine two").includes("&lt;br&gt;"),
+        "markdownToHtml does not escape generated line breaks"
+      );
+
+      const legacyManifest = {
+        volume: {
+          title: "Passion Week",
+          baseUrl: "https://example.com/poetry/passionweek/"
+        },
+        poems: [{ title: "Legacy Poem", file: "Legacy Poem.md" }]
+      };
+
+      console.assert(
+        normalizeManifest(legacyManifest)[0].volumes[0].poems.length === 1,
+        "normalizeManifest supports legacy volume plus poems format"
+      );
+
+      const catalogManifest = {
+        collections: [
+          {
+            id: "gospel-as-poetry",
+            title: "The Gospel As Poetry",
+            volumes: [
+              {
+                id: "passion-week",
+                title: "Volume 3 - Passion Week",
+                folder: "passionweek",
+                poems: [{ title: "Test Poem", file: "Test Poem.md" }]
+              }
+            ]
+          }
+        ]
+      };
+
+      const normalizedCatalog = normalizeManifest(catalogManifest);
+
+      console.assert(
+        normalizedCatalog[0].volumes[0].id === "passion-week" &&
+          normalizedCatalog[0].volumes[0].poems.length === 1,
+        "normalizeManifest supports collection and volume catalogs"
+      );
+
+      console.assert(
+        normalizePoem(
+          { title: "Test", file: "Example Poem.md" },
+          normalizedCatalog[0].volumes[0]
+        ).url.includes("Example%20Poem.md"),
+        "normalizePoem builds encoded URLs from manifest entries"
+      );
+
+      console.assert(
+        githubTreeToPagesUrl(
+          "https://github.com/mmister411/biblereader/tree/main/poetry/paulineepistles"
+        ) === "https://mmister411.github.io/biblereader/poetry/paulineepistles",
+        "githubTreeToPagesUrl converts GitHub tree URLs into GitHub Pages URLs"
+      );
+
+      const paulineCatalog = normalizeManifest({
+        collections: [
+          {
+            id: "pauline-epistles",
+            title: "The Pauline Epistles As Poetry",
+            baseUrl: "https://github.com/mmister411/biblereader/tree/main/poetry/paulineepistles",
+            volumes: [
+              {
+                id: "romans",
+                title: "Romans",
+                folder: "paulineepistles",
+                poems: [
+                  {
+                    title: "Chapter 1 - Unashamed of The Gospel",
+                    file: "Romans 1 - Unashamed of The Gospel.md"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+
+      const romansPoem = normalizePoem(
+        paulineCatalog[0].volumes[0].poems[0],
+        paulineCatalog[0].volumes[0]
+      );
+
+      console.assert(
+        romansPoem.url ===
+          "https://mmister411.github.io/biblereader/poetry/paulineepistles/Romans%201%20-%20Unashamed%20of%20The%20Gospel.md",
+        "normalizeVolume inherits collection baseUrl when volume baseUrl is absent"
+      );
+
+      console.assert(
+        paulineCatalog[0].volumes.length === 1,
+        "single-volume collections still retain a renderable volume"
+      );
+
+      console.assert(
+        typeof copyTextToClipboard === "function",
+        "copyTextToClipboard exists for clipboard fallback handling"
+      );
+
+      console.assert(
+        new URL(buildShareUrl({ file: "Example Poem.md" }))
+          .searchParams
+          .get("poem") === "Example Poem.md",
+        "buildShareUrl stores readable poem file names instead of double-encoded values"
+      );
+
+      console.assert(
+        decodeRepeatedly("Gethsemane%2520-%2520Garden%2520of%2520Prayer.md") ===
+          "Gethsemane - Garden of Prayer.md",
+        "decodeRepeatedly handles older double-encoded poem query values"
+      );
+    }
+
+    copyLink.addEventListener("click", async () => {
+      const url = buildShareUrl(activePoem);
+      const copied = await copyTextToClipboard(url);
+      setCopyButtonState(copied ? "Copied" : "Select link");
+
+      if (!copied) {
+        window.prompt("Copy this link:", url);
+      }
+    });
+
+    window.addEventListener("popstate", () => {
+      selectCollectionAndVolume(getRequestedCollectionId(), getRequestedVolumeId());
+      renderVolumeMeta();
+      renderCollectionList();
+      renderVolumeList();
+      renderPoemList();
+      loadPoem(getInitialPoem(), false);
+    });
+
+    async function initReader() {
+      try {
+        initBt3Header();
+        runReaderTests();
+        readerStatus.textContent = "Loading library";
+
+        await loadManifest();
+        renderVolumeMeta();
+        renderCollectionList();
+        renderVolumeList();
+        renderPoemList();
+
+        if (!POEMS.length) {
+          throw new Error(`Volume "${VOLUME.title}" does not contain any poems.`);
+        }
+
+        await loadPoem(getInitialPoem(), false);
+      } catch (error) {
+        readerStatus.textContent = "Reader unavailable";
+        renderVolumeMeta();
+
+        poemContent.innerHTML = `
+          <div class="error-box">
+            Could not initialize the poetry reader.<br>
+            <code>${escapeHtml(error.message)}</code>
+          </div>
+        `;
+      }
+    }
+
+    initReader();
+  </script>
+</body>
+</html>
